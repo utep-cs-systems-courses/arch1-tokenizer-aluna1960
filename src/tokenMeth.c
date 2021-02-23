@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <string.h>
+
 #include <stdlib.h>
 #include "tokenizer.h"
 
 int space_char(char c){
-  if(c == ' ' || c == '\t'){
+  if(c == ' '){
     return 1;
   }
   else{
@@ -13,29 +13,28 @@ int space_char(char c){
 }
 
 int non_space_char(char c){
-  if(c != ' '){
-    return 1;
-  }
-  
-  else{
+  if (c == ' '|| c == '\0'){
     return 0;
+  }  
+  else{
+    return 1;
   }
 }
 
 char *word_start(char *str){
   
   while(1){
-    if (non_space_char(*str)==1 && space_char(*str)==0){
-      str = str+1;
-    }
-    else if(*str=='\0'){
-      return 0;
-    }
-    else{
+    if(*str = '\0'){
       return str;
     }
-  }
     
+    if (*(str)==' ' && *(str+1) !=' '){
+      return str+1;
+    }
+    else{
+      str++;
+    }
+  }    
 }
 
        
@@ -43,105 +42,83 @@ char *word_terminator(char *word){
     
   int i;
   int count = 0;
-
-  if(word_start(word)==0){
-    word = 0;
-  }
-    /*for(i = 0; *(word+i) != ' ' || *(word+i)!='\0';i++){
-    word = 0;
-  }  
-  for(i = 0;*(word+i)!='\0';i++){
-    count++;
-    }*/
-  /*for(i = 0; i<count;i++){
-    if(*(word+i)=='\0' || word+i == NULL){
-      return NULL;
+  while(*word!='\0'){
+    
+    if(*word == ' '){
+      return word;
     }
-    }*/
-  return word;
+    else{
+      word++;
+    }
+  }
 }
 
 int count_words(char *str){
   int counter = 0;
-  int i=0;
-  printf("i");
-
+  printf("counting");
   while(1){
-    if(non_space_char((char)*str)==0){
-      printf("%d",non_space_char((char)*str));
+    if(*str != ' '){
       str++;
-      printf("i");
-      i++;
-    }
-    if(non_space_char((char)*str)==1){
-      str = word_start(str);
-      counter++;
-      printf("wassup");
-    }
-    if(*str=='\0'){
-      return counter;
-     
-    }
-  }
-  return counter;
-  /*
-  while(1){
-    if(*(word_start(str))!='\0'){
-      str = word_start(str);
-      counter++;
+
+      printf("counting");
     }
     else{
-      return counter;
+      str=str+2;
+      counter++;
+      
     }
+    if(*str=='\0'){
+      return counter+1;
+    }    
   }
-      /*for(i=0; *(str+i)!='\n' || *(str+i)!='\0' || str+i!=NULL;i++){
-	counter++;*/
-  //printf("hello");
-  //return counter;
+  return counter+1;
 }
 
 char *copy_str(char *inStr, short len){
   int i;
-  int count = 0;
-  for(i = 0; *(inStr+i)!=' ' || *(inStr+i)!='\0';i++){
-    count++;
+
+  char *newStr=malloc((len+1)*sizeof(char*));
+  for(i = 0; i<(len+1);i++){
+    if(i == len){
+      *(newStr+i) = '\0';
+    }
+    else{
+      *(newStr+i) = *(inStr+i);
+      
+    }
   }
-  
-
-  char *newStr=malloc((len+1)*sizeof(char));
-
-  
-
-  for(i = 0; i<len;i++){
-    *(newStr+i) = *(inStr+i);
-  }
-  
   return newStr;
 }
 
 char **tokenize(char* str){
   int i = 0;
- 
-  int count = 0;
-
-  for(i = 0; str+i!= NULL || *(str+i)!='\0';i++){
-    count++;
-  }
-    
-  printf("this is the number of words: %d)",count);
-  
-  char **tokenizer=malloc((count+1)*sizeof(char*));
-  
-  for(i = 0; i < count;i++){
-    
-    *(tokenizer+i) = str;
-    str = word_start(str);
-
+  int iter = 0;
+  char *hold = str;
+  int count = count_words(str);
+  char **tokens = malloc((count+1)*sizeof(char*));
+  for( ;i <= count;i++){
+    if(i==count){
+      *(tokens+i)=0;
     }
-  for(i=0;i<count;i++){
-    printf("%c",**tokenizer+i);
+    for(int j = 0; *(hold)!=' ';j++){
+      iter++;
+      hold++;
+    }
+    
+    *(tokens+i) = copy_str(str,iter+1);
+    str = word_start(str);
   }
-  return 0;
+  /*
+    if(*(hold+1)=='\0'){
+      *(tokens+i) = 0;
+    }
+    else{
+      str = hold;
+      iter = 0;
+      hold=hold+2;
+    }
+    }*/
+  return tokens;
 }
 
 
