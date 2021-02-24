@@ -18,13 +18,13 @@ int main(){
   
   char r = ' ';
   
-  //char *p = &words[0];
+  char *p = words;
   
   printf("%s\n",words);
-  char **tokens = tokenize(&words[0]);
+  char **tokens = tokenize(p);
   int i = 0;
   int check = 1;
-  printf("First word of token 1: \n");
+  //printf("First word of token 1: \n");
   /* while(check){
     printf("%c",*(*(tokens)+i));
     i++;
@@ -44,17 +44,20 @@ int main(){
     }*/  
   //char *str = copy_str(p,5);
   //printf("Second set: %s",*(str));
-  printf("this is the first char of token 1: %c\n",**tokens);
+  printf("this is the first char of token 1: %c\n",*(*(tokens)+1));
   tokens = tokens+1;
-  printf("this is the first char of token 2: %c\n",*(*(tokens)+1));
+  printf("this is the first char of token 2: %c\n",*(*(tokens)));
+  //tokens = tokens+1;
+  //printf("this is the first char from token 2: %c\n",*(*(tokens)));
+  tokens = tokens-1;
 
-  printf("this is the first char from token 2: %c\n",*(*(tokens)+5));
-  
-  
-  /*printf("Testing space_char: %i\n",space_char(r));
+  printf("these are the tokens right under this: \n");
+  print_tokens(tokens);
+  printf("\n");
+  printf("Testing space_char: %i\n",space_char(r));
   printf("Testing word_start: %c\n",*(word_start(p)));
   printf("Testing non_space_char: %i\n",non_space_char(r));
-  printf("%i\n",count_words(p));*/
+  printf("%i\n",count_words(p));
   return 0;
   
 }

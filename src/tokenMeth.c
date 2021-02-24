@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include <stdlib.h>
-#include "tokenizer.h"
+#include "tokenizey r.h"
 
 int space_char(char c){
   if(c == ' '){
@@ -24,7 +24,7 @@ int non_space_char(char c){
 char *word_start(char *str){
   
   while(1){
-    if(*str = '\0'){
+    if(*(str+1) == '\0'){
       return str;
     }
     
@@ -55,12 +55,12 @@ char *word_terminator(char *word){
 
 int count_words(char *str){
   int counter = 0;
-  printf("counting");
+  
   while(1){
     if(*str != ' '){
       str++;
 
-      printf("counting");
+      
     }
     else{
       str=str+2;
@@ -91,51 +91,51 @@ char *copy_str(char *inStr, short len){
 }
 
 char **tokenize(char* str){
-  int i = 0;
-  int iter = 0;
+  //creating variablies to be utilized, also getting the number of words in the input
+  int i = 0, iter = 0, count = count_words(str);
   char *hold = str;
-  int count = count_words(str);
+  //allocating memory to insert words into an array of pointers
   char **tokens = malloc((count+1)*sizeof(char*));
+
+  //iterating through tokens 
   for( ;i <= count;i++){
     if(i==count){
       *(tokens+i)=0;
+      break;
     }
+    //finding length of each word
     for(int j = 0; *(hold)!=' ';j++){
       iter++;
       hold++;
     }
-    
-    *(tokens+i) = copy_str(str,iter+1);
+    //inserting words into tokens
+    *(tokens+i) = copy_str(str,iter);
     str = word_start(str);
+    iter++;
   }
-  /*
-    if(*(hold+1)=='\0'){
-      *(tokens+i) = 0;
-    }
-    else{
-      str = hold;
-      iter = 0;
-      hold=hold+2;
-    }
-    }*/
+  //returning tokens
   return tokens;
 }
 
-
 void print_tokens(char **tokens){
-  int i = 0;
-  int k = 1;
-  
-  while(k){
-    if(tokens[i]!=NULL){
-      
-
-      printf("%c",*tokens[i]);
+  int i = 0, j = 0;
+  while(1){
+    if(*(tokens)==0){
+      break;
     }
-    else{
-      k = 0;
+    while(*(*(tokens)+j)!='\0'||*(*(tokens)+j)==' '){
+      printf("%c",*(*(tokens)+j));
+      j++;
     }
+    if(*(tokens+1)!=0){
+      printf(", ");
+    }
+    i++;
+    tokens = tokens+1;
+    j=0;
   }
+  tokens=tokens-i;
+  return;
 }
 
 void free_tokens(char **tokens){
