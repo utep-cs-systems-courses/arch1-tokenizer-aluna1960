@@ -118,22 +118,35 @@ char **tokenize(char* str){
 }
 
 void print_tokens(char **tokens){
+  //variables to be utilized
   int i = 0, j = 0;
+  //iterating through each character of each token
   while(1){
+    //checking if we have reached the last token, which should be null
     if(*(tokens)==0){
+      //we then exit the while loop
       break;
     }
+    //printing out each character of the token were at
     while(*(*(tokens)+j)!='\0'||*(*(tokens)+j)==' '){
+
+      //print each character of the token (word)
       printf("%c",*(*(tokens)+j));
+      //j is used to go to the next character in the token were at
       j++;
     }
+    //if we reach the end of the token, then we add a parenthesis and go to the next
     if(*(tokens+1)!=0){
       printf(", ");
     }
+    //increase the value of i
     i++;
+    //go to the next token (word)
     tokens = tokens+1;
+    //set j, which was used to traverse through the characters of the word back to 0
     j=0;
   }
+  //we return to the first token by subtracting "i", which was the number or times that tokens array was increased.
   tokens=tokens-i;
   return;
 }
