@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tokenizer.h"
+#include "history.h"
 
 
 int main(){
@@ -24,26 +25,7 @@ int main(){
   char **tokens = tokenize(p);
   int i = 0;
   int check = 1;
-  //printf("First word of token 1: \n");
-  /* while(check){
-    printf("%c",*(*(tokens)+i));
-    i++;
-    if(*(*(tokens)+i) == *word_start(p)){
-      check = 0;
-    }
-    }*/
-  /*check = 1;
-  printf("\n");
-  printf("Token 2 word: \n");
-  while(check){
-    printf("%s",*(*(tokens+1)+i));
-    i++;
-    if(*(*(tokens+1)+i) == '\0'){
-      check = 0;
-    }
-    }*/  
-  //char *str = copy_str(p,5);
-  //printf("Second set: %s",*(str));
+
   printf("this is the first char of token 1: %c\n",*(*(tokens)+1));
   tokens = tokens+1;
   printf("this is the first char of token 2: %c\n",*(*(tokens)));
@@ -58,6 +40,12 @@ int main(){
   printf("Testing word_start: %c\n",*(word_start(p)));
   printf("Testing non_space_char: %i\n",non_space_char(r));
   printf("%i\n",count_words(p));
+
+  //-----------------------------Linked Lists------------------------------------
+  List *pract = init_history();
+  char *str = "h";
+  add_history(pract,ystr);
+  
   return 0;
   
 }
