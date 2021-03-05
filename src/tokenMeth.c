@@ -133,12 +133,9 @@ void print_tokens(char **tokens){
 
 void free_tokens(char **tokens){
   int i;
-  int count = 0;
-  
+    
   for(i = 0; tokens[i]!=NULL;i++){
     free(tokens[i]);
-    count++;
-    printf("%d",count);
   }
   free(tokens);
   
