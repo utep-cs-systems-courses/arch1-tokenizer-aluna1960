@@ -28,11 +28,8 @@ int non_space_char(char c){
 }
 
 char *word_start(char *str){
-  /*for word start, we are getting the first character of the next word
-    here we start with a while loop that goes on forever. In the first conditional we check if the next character the pointer points to is null, or "\0", then we return the current pointer*/
-  
   if(sizeof(str)==0){
-    return '\0';
+    return 0;
   }
 
   for(int i = 0; i<sizeof(str);i++){
@@ -50,7 +47,7 @@ char *word_terminator(char *word){
   int i=0;
   int count = 0;
   if(sizeof(word)==0){
-    return '\0';
+    return 0;
   }
   /*then afterwards the code enters into a while loop that checks whether the deferenced pointer is the very last character '\0'*/
   while(*word!='\0'){
@@ -60,10 +57,8 @@ char *word_terminator(char *word){
       return &word[i];
     }
     i++;
-      //word++;
-   
   }
-  return '\0';
+  return 0;
 }
 
 int count_words(char *str){
@@ -75,7 +70,7 @@ int count_words(char *str){
     if(*str != ' '){
       str++;      
     }
-    /*if it is equal to a space, then we have to move the pointer up twice, so as to not count the space, and we count each word. Ex: "word1 word2"; we only count if it is not a space that way we count each word.*/
+    
     else{
       str=str+2;
       counter++;
@@ -102,23 +97,6 @@ char *copy_str(char *inStr, short len){
     i++;
   }
   newStr[len]='\0';
-  
-  
-  /*for(i = 0; i<(len+1);i++){*/
-  /*if i = length, then we set *(newStr+i) = '\0'*/
-  /*if(i == len){
-      *(newStr+i) = '\0';
-      }*/
-    
-
-    /*if not, then *(newStr+i) is equal to the input string pointer*/
-
-    /*else{
-      *(newStr+i) = *(inStr+i);
-      
-    }
-    }*/
-  /*We return the newly created newStr*/
   return newStr;
 }
 
@@ -148,57 +126,22 @@ char **tokenize(char* str){
 }
 
 void print_tokens(char **tokens){
-  for(int i = 0;tokens[i]!=NULL;i++){
+  for(int i = 0;tokens[i];i++){
     printf("%s, ",tokens[i]);
   }
-  
-  //variables to be utilized
-  /*int i = 0, j = 0;
-  //iterating through each character of each token
-  while(1){
-    //checking if we have reached the last token, which should be null
-    if(*(tokens)==0){
-      //we then exit the while loop
-      break;
-    }
-
-    //printing out each character of the token were at
-    while(*(*(tokens)+j)!='\0'||*(*(tokens)+j)==' '){
-
-      //print each character of the token (word)
-      printf("%c",*(*(tokens)+j));
-      //j is used to go to the next character in the token were at
-      j++;
-    }
-    //if we reach the end of the token, then we add a parenthesis and go to the next
-    if(*(tokens+1)!=0){
-      printf(", ");
-    }
-    //increase the value of i
-    i++;
-    //go to the next token (word)
-    tokens = tokens+1;
-    //set j, which was used to traverse through the characters of the word back to 0
-    j=0;
-  }
-  //we return to the first token by subtracting "i", which was the number or times that tokens array was increased.
-  tokens=tokens-i;*/
- 
 }
 
 void free_tokens(char **tokens){
   int i;
   int count = 0;
   
-  for(i = 0; (tokens+i)!=NULL;i++){
-    free(*(tokens+i));
+  for(i = 0; tokens[i]!=NULL;i++){
+    free(tokens[i]);
     count++;
-  }
-
-  for(i = count;i>0;i--){
-    free(tokens+i);
+    printf("%d",count);
   }
   free(tokens);
+  
   
 }
   
