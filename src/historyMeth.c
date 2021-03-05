@@ -39,30 +39,22 @@ char *get_history(List *list, int id){
 void print_history(List *list){
   Item *node = list->root;
   while(node->next!=NULL){
-    printf("%s\n ",node->str);
+    printf("%s ",node->str);
     node = node->next;
   }
 }
 
 void free_history(List *list){
   Item *node = list->root;
-
-  while(list->root!=NULL){
-    if(node->next==NULL){
-      free(node);
-      node = list->root;
-    }
-    else{
-      node = node->next;
-    }
+  Item *nextNode = NULL;
+  while(node->next!=NULL){
+    nextNode = node->next;
+    free(node);
+    node = nextNode;
     
   }
-  /*while(node->next!=NULL){
-    free(node);
-    node = node->next;
-    }*/
-  //free(node);
-  // free(list);
+  free(node);
+  free(list);
 }
   
 
