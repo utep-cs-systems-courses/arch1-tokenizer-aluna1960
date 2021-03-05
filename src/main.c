@@ -7,37 +7,69 @@
 int main(){
   
   List *histList = init_history();
-
+  char answer[1];
   char choice[1];
   char q[20]; 
-
+  char **tokens;
   char wordsHolder[20] = "k";
   printf("To tokenize press 't'; to make Linked list press 'l':\n");
   scanf(" %[^\n]\0",&choice);
-
-  if(choice[0] == 'l'){
-    while(wordsHolder[0]!='n'){
+  printf("We will now proceed to make a history of what you want to enter.\n");
+  //if(choice[0] == 'l'){
+  while(wordsHolder[0]!='n'){
+   
+    int count = 0;
+    printf("Enter a word/sentence please: \n");
     
-      int count = 0;
-      printf("Enter a word/sentence please: \n");
-    
-      scanf(" %[^\n]\0",wordsHolder);
-      for(int i = 0; wordsHolder[i]!='\0';i++){
-	count++;
-      }
-      add_history(histList,copy_str(wordsHolder,count));
-      printf("Would you like to add more words? y/n: ");
+    scanf(" %[^\n]\0",wordsHolder);
+    for(int i = 0; wordsHolder[i]!='\0';i++){
+      count++;
+    }
+    add_history(histList,copy_str(wordsHolder,count));
+    printf("Would you like to add more words? y/n: ");
 
-      scanf(" %[^\n]\0",wordsHolder);
-      if(wordsHolder[0] == 'n'){
-	print_history(histList);
-	printf("which of the sentences do you want to print out? enter an ID: \n");
+    scanf(" %[^\n]\0",wordsHolder);
+    /*if(wordsHolder[0] == 'n'){
+      print_history(histList);
+      printf("which of the sentences do you want to print out? enter an ID: \n");
        
-	printf("This is your 2nd sentence %s\n",get_history(histList,2));
+      }*/
+  }
+  while(1){
+    char choice2[25];
+    char choice3[25];
+    printf("To view history- !ID \tTokenize an element from history- 't' \tQuit- 'q'");
+    scanf(" %[^\n]\0", choice2);
+    char *ptr1;
+    
+    long num2;
+    long num = strtol(&choice2[1],&ptr1,10);
+    if(choice2[0]=='!'){
+      
+      printf("Item associated with %s: %s",&choice2[1], get_history(histList,(int)num));
+    }
+    if(choice3[0]=='t'){
+      
+      printf("which would you like to tokenize? Enter ID :\n");
+      scanf(" %[^\n]\0",choice3);
+      num2 = strtol(&choice3[0],&ptr1,10);
+      char *pointer=get_history(histList,(int)num2);
+      tokens=tokenize(pointer);
+      print_tokens(tokens);
+      free_tokens(tokens);
+      printf("Would you like to view another history element or Tokenize another sentence? y/n\n");
+      scanf("%[^\n]\0",answer);
+      if(answer[0]=='n'){
+	break;
       }
     }
+    if(choice2[0]=='q'){
+      break;
+    }
+    
   }
-  else{
+    
+  /*else{
 
     char tokenStr[75];
     
@@ -49,9 +81,10 @@ int main(){
     printf("\nthese is your sentence tokenized \n");
     printf("We will now free the space in your newly created tokenized sentence\n\n");
     free_tokens(tokenizeStr);
-    printf("This is now your current tokenized string: \n");
+    printf("This is now your current tokenized string:\n\n");
     print_tokens(tokenizeStr);
-  }  
+    
+    }*/  
     
   //print_history(histList);
   //printf("\n\n");
